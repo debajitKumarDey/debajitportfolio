@@ -813,6 +813,7 @@ align with client goals. Adept at combining creativity with technology to delive
     const loading = form.querySelector('.loading');
     const successMsg = form.querySelector('.sent-message');
 
+    // Show loading
     loading.style.display = 'block';
     successMsg.style.display = 'none';
 
@@ -822,17 +823,24 @@ align with client goals. Adept at combining creativity with technology to delive
       method: 'POST',
       body: formData
     })
-    .then(() => {
+    .then(response => {
+      // Stop loading in both success and failure
       loading.style.display = 'none';
-      successMsg.style.display = 'block'; // show green success message
-      form.reset();
+
+      if (response.ok) {
+        successMsg.style.display = 'block'; // show green success message
+        form.reset();
+      } else {
+        alert('There was an error submitting the form.'); // simple error handling
+      }
     })
     .catch(() => {
-      loading.style.display = 'none';
-      alert('There was an error submitting the form.'); // optional simple alert
+      loading.style.display = 'none'; // hide loading on network error
+      alert('There was an error submitting the form.');
     });
   });
 </script>
+
 
 
 <!-- /Contact Section -->
