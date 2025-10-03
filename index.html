@@ -785,8 +785,6 @@ align with client goals. Adept at combining creativity with technology to delive
       </div>
 
       <div class="col-md-12 text-center">
-        <div class="loading" style="display:none;">Loading...</div>
-
         <!-- SUCCESS MESSAGE -->
         <div class="sent-message" style="display:none; 
                                     background-color: green; 
@@ -803,6 +801,7 @@ align with client goals. Adept at combining creativity with technology to delive
   </form>
 </div>
 
+
 <!-- <...Ajax for modal pop-up> -->
 <script>
   const form = document.getElementById('contact-form');
@@ -810,11 +809,9 @@ align with client goals. Adept at combining creativity with technology to delive
   form.addEventListener('submit', function (e) {
     e.preventDefault(); // prevent default form submission
 
-    const loading = form.querySelector('.loading');
     const successMsg = form.querySelector('.sent-message');
 
-    // Show loading
-    loading.style.display = 'block';
+    // Hide success message first
     successMsg.style.display = 'none';
 
     const formData = new FormData(form);
@@ -824,22 +821,19 @@ align with client goals. Adept at combining creativity with technology to delive
       body: formData
     })
     .then(response => {
-      // Stop loading in both success and failure
-      loading.style.display = 'none';
-
       if (response.ok) {
         successMsg.style.display = 'block'; // show green success message
         form.reset();
       } else {
-        alert('There was an error submitting the form.'); // simple error handling
+        alert('There was an error submitting the form.');
       }
     })
     .catch(() => {
-      loading.style.display = 'none'; // hide loading on network error
       alert('There was an error submitting the form.');
     });
   });
 </script>
+
 
 
 
