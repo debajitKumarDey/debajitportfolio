@@ -754,13 +754,11 @@ align with client goals. Adept at combining creativity with technology to delive
 
 <div class="col-lg-7">
   <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
-        class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+  action="#" id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
 
-    <!-- Hidden Netlify fields -->
-    <input type="hidden" name="form-name" value="contact">
-    <input type="hidden" name="redirect" value="/thank-you.html"> <!-- optional redirect -->
+    <input type="hidden" name="form-name" value="contact" />
 
-    <!-- Honeypot field (spam protection) -->
+    <!-- Honeypot -->
     <p style="display:none">
       <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
     </p>
@@ -787,22 +785,57 @@ align with client goals. Adept at combining creativity with technology to delive
       </div>
 
       <div class="col-md-12 text-center">
-        <div class="loading">Loading</div>
-        <div class="error-message"></div>
-        <div class="sent-message">Your message has been sent. Thank you!</div>
+        <div class="loading" style="display:none;">Loading...</div>
+        <div class="error-message" style="display:none;color:red;"></div>
+        <div class="sent-message" style="display:none; 
+                                    background-color: green; 
+                                    color: white; 
+                                    font-weight: bold; 
+                                    padding: 10px; 
+                                    border-radius: 5px;">
+          Form Submitted. Thank you!
+        </div>
 
         <button type="submit">Send Message</button>
       </div>
     </div>
   </form>
 </div>
-<!-- End Contact Form -->
+<!-- <...Ajax for modal pop-up> -->
+<script>
+  const form = document.getElementById('contact-form');
 
-        </div>
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); // prevent default browser form submission
 
-      </div>
+    const loading = form.querySelector('.loading');
+    const errorMsg = form.querySelector('.error-message');
+    const successMsg = form.querySelector('.sent-message');
 
-    </section><!-- /Contact Section -->
+    loading.style.display = 'block';
+    errorMsg.style.display = 'none';
+    successMsg.style.display = 'none';
+
+    const formData = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+      .then(() => {
+        loading.style.display = 'none';
+        successMsg.style.display = 'block'; // only show this
+        form.reset(); // reset form fields
+      })
+      .catch(() => {
+        loading.style.display = 'none';
+        errorMsg.innerText = 'There was an error submitting the form';
+        errorMsg.style.display = 'block';
+      });
+  });
+</script>
+
+<!-- /Contact Section -->
 
   </main>
 
