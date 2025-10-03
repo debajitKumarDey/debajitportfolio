@@ -754,7 +754,7 @@ align with client goals. Adept at combining creativity with technology to delive
 
 <div class="col-lg-7">
   <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
-  action="#" id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+        action="#" id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
 
     <input type="hidden" name="form-name" value="contact" />
 
@@ -786,7 +786,8 @@ align with client goals. Adept at combining creativity with technology to delive
 
       <div class="col-md-12 text-center">
         <div class="loading" style="display:none;">Loading...</div>
-        <div class="error-message" style="display:none;color:red;"></div>
+
+        <!-- SUCCESS MESSAGE -->
         <div class="sent-message" style="display:none; 
                                     background-color: green; 
                                     color: white; 
@@ -801,19 +802,18 @@ align with client goals. Adept at combining creativity with technology to delive
     </div>
   </form>
 </div>
+
 <!-- <...Ajax for modal pop-up> -->
 <script>
   const form = document.getElementById('contact-form');
 
   form.addEventListener('submit', function (e) {
-    e.preventDefault(); // prevent default browser form submission
+    e.preventDefault(); // prevent default form submission
 
     const loading = form.querySelector('.loading');
-    const errorMsg = form.querySelector('.error-message');
     const successMsg = form.querySelector('.sent-message');
 
     loading.style.display = 'block';
-    errorMsg.style.display = 'none';
     successMsg.style.display = 'none';
 
     const formData = new FormData(form);
@@ -822,18 +822,18 @@ align with client goals. Adept at combining creativity with technology to delive
       method: 'POST',
       body: formData
     })
-      .then(() => {
-        loading.style.display = 'none';
-        successMsg.style.display = 'block'; // only show this
-        form.reset(); // reset form fields
-      })
-      .catch(() => {
-        loading.style.display = 'none';
-        errorMsg.innerText = 'There was an error submitting the form';
-        errorMsg.style.display = 'block';
-      });
+    .then(() => {
+      loading.style.display = 'none';
+      successMsg.style.display = 'block'; // show green success message
+      form.reset();
+    })
+    .catch(() => {
+      loading.style.display = 'none';
+      alert('There was an error submitting the form.'); // optional simple alert
+    });
   });
 </script>
+
 
 <!-- /Contact Section -->
 
